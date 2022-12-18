@@ -1,0 +1,25 @@
+version: '3'
+services:
+  private-registry: 
+    image: registry:2
+    container_name: private-registry
+    restart: always
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./volume:/var/lib/registry
+    
+
+
+  private-registry-ui:
+    image: konradkleine/docker-registry-frontend:v2
+    container_name: private-registry-ui
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+        ENV_DOCKER_REGISTRY_HOST: private-registry
+        ENV_DOCKER_REGISTRY_PORT: 5000
+
+
+  
